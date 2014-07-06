@@ -1,0 +1,28 @@
+{% extends 'library_base.html' %}
+{% block title %}Microlibrary: Authors{% endblock %}
+{% block content%}
+    <div class="container">
+    <h3 class="page-header">Current list of authors in our MicroLibrary:</h3>
+    <ul>
+    {% for author in authors %}
+        <li>
+        <div>
+            <p>{{ author.name }}
+            {% if author.books.all() %}
+                <b>authored</b>
+                {% for book in author.books.all() %}
+                    '{{ book }}'{% if not loop.last %},{% else %}.{% endif %}
+                {% endfor %}
+            {% endif %}
+            {% if current_user.is_authenticated() %}
+                <a href="{{ url_for('library_edit_author', author_id=author.id, book_id=request.args.get('book_id')) }}">
+                Edit</a>
+                <a href="{{ url_for('library_delete_author', author_id=author.id) }}">Delete</a>
+            {% endif %}
+            </p>
+        </div>
+        </li>
+    {% endfor %}
+    </ul>
+    </div>
+{% endblock %}

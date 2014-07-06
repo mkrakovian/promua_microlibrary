@@ -1,0 +1,8 @@
+{% extends 'library_add_book.html' %}
+{% block title %}Edit book{% endblock %}
+{% block page_header %}Editing book titled '{{ form.title.data }}'{% endblock %}
+{% block no_authors %}
+    Perhaps, U'll need to <a href="{{ url_for('library_authors', book_id=form.id.data) }}">edit</a>
+    or <a href="{{ url_for('library_add_author', book_id=form.id.data) }}">add</a> authors first.
+{% endblock %}
+{% block submit_value %}Edit {% endblock %}

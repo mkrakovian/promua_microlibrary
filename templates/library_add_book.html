@@ -1,0 +1,29 @@
+{% extends 'library_base.html' %}
+{% block title %}Add a new book{% endblock %}
+{% block content %}
+    <div class="container">
+    <h1 class="page-header">{% block page_header %}Add a new book{% endblock %}</h1>
+    <form class="form-horizontal" action="" method="post" name="add_book">
+        {{ form.hidden_tag() }}
+        <p class="text-left">
+            Enter the book's title:
+            {{ form.title(size=100) }}<br>
+            {% for error in form.errors.title %}
+                <span class="alert-warning">[[{{ error }}]]</span>
+            {% endfor %}<br>
+        </p>
+        <p class="text-left">
+            Choose the book's authors:
+            {{ form.authors }}<br>
+            {% for error in form.errors.authors %}
+                <span class="alert-warning">[[{{ error }}]]</span>
+            {% endfor %}<br><br>
+            Use <kbd>Ctrl</kbd> for multiple select<br>
+            {% block no_authors %}If there are no authors U need, <a href="{{ url_for('library_add_author') }}">add</a>
+                a new author.{% endblock %}
+        </p>
+        <p><input style="padding: 2px 4px" type="submit" class="btn btn-mini btn-success"
+                  value={% block submit_value %}"Add book"{% endblock %}/></p>
+    </form>
+    </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'library_base.html' %}
+{% block title %}Log in{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1 class="page-header">Log in</h1>
+        {% if error %}
+            <div class="alert alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <span>[[{{ error }}]]</span>
+            </div>
+        {% endif %}
+        <form class="form-horizontal" method="post" name="login">
+            {{ form.hidden_tag() }}
+            <p class="text-left">
+                Username:
+                {{ form.username(size=20) }}<br>
+                {% for error in form.errors.username %}
+                    <span class="alert-warning">[[{{ error }}]]</span>
+                {% endfor %}<br>
+                Password:
+                {{ form.password }}<br>
+                {% for error in form.errors.password %}
+                    <span class="alert-warning">[[{{ error }}]]</span>
+                {% endfor %}<br>
+            </p>
+            <p>{{ form.remember_me }} Remember me</p>
+            <p><input style="padding: 2px 4px" class="btn btn-mini btn-success" type="submit" value="Log in"/></p>
+        </form>
+    </div>
+
+{% endblock %}

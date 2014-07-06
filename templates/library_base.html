@@ -1,0 +1,47 @@
+{% extends "bootstrap/base.html" %}
+
+{% block navbar %}
+    <div class="navbar navbar-inverse" role="navigation" xmlns="http://www.w3.org/1999/html">
+        <div class="container">
+            <div class="navbar-header">
+                <p class="navbar-brand">MicroLibrary</p>
+            </div>
+            <div style="display: inline-block">
+                <ul class="nav navbar-nav">
+                    <li><a href="{{ url_for('library') }}">Books</a></li>
+                    <li><a href="{{ url_for('library_authors') }}">Authors</a></li>
+                    <li><a href="{{ url_for('library_add_book') }}">Add book</a></li>
+
+                    {% if current_user.is_authenticated() %}
+                        <li><a href="{{ url_for('logout') }}">Log out, {{ current_user }}</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('library_register') }}">Register</a></li>
+                        <li><a href="{{ url_for('login') }}">Log in</a></li>
+                    {% endif %}
+                    <li>
+                        <p>
+                            <form class="navbar-search" action="{{ url_for('library_search') }}" method="post">
+                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                <input class="input-medium search-query" type="text" name="search_query" size="50" />
+                                <input style="padding: 2px 4px" class="btn btn-mini btn-primary" type="submit" value="Search" />
+                            </form>
+                        </p>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+            {% for message in messages %}
+                <p>
+                    <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ message }}
+                    </div>
+                </p>
+            {% endfor %}
+    {% endif %}
+    {% endwith %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'library_base.html' %}
+{% block title %}Deleting book{% endblock %}
+{% block content %}
+    <div class="container">
+        <div>
+        <h1 class="text-warning">Caution:</h1>
+        <p class="text-left">
+            U'r trying to delete '{{ name }}'.<br>
+            Do U want to proceed?
+        </p>
+        </div>
+        <div style="display: inline-block">
+            <form class="form-horizontal" method="post" name="delete_book">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                <input style="padding: 2px 4px" type="submit" class="btn btn-mini btn-danger" value="Yes" />
+            </form>
+        </div>
+        <div style="display: inline-block">
+            <a href="{{ url_for('library_authors') }}"><button style="padding: 2px 4px" class="btn btn-mini btn-success">
+                Cancel</button></a>
+        </div>
+    </div>
+{% endblock %}

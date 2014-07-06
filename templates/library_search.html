@@ -1,0 +1,58 @@
+{% extends 'library_base.html' %}
+{% block title %}Search{% endblock %}
+{% block content %}
+    <div class="container">
+    <h3 class="page-header">Results for query '{{ sq }}':</h3>
+    {% if books %}
+        <ul>
+            <li>
+                <b>In books section:</b>
+                <ol>
+                    {% for book in books %}
+                        <li>
+                        <div>
+                            <p>{{ book.title }}
+                            {% if book.authors.all() %}
+                                <b>written by</b>
+                                {% for author in book.authors.all() %}
+                                    {{ author }}{% if not loop.last %},{% else %}.{% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            </p>
+                        </div>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </li>
+
+        </ul>
+    {% endif %}
+    {% if authors %}
+        <ul>
+            <li>
+                <b>In authors section:</b>
+                <ol>
+                    {% for author in authors %}
+                        <li>
+                        <div>
+                            <p>{{ author.name }}
+                            {% if author.books.all() %}
+                                <b>authored</b>
+                                {% for book in author.books.all() %}
+                                    '{{ book }}'{% if not loop.last %},{% else %}.{% endif %}
+                                {% endfor %}
+                            {% endif %}
+                            </p>
+                        </div>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </li>
+        </ul>
+    {% endif %}
+    {% if not (books or authors) %}
+        <b>No results found</b>
+    {% endif %}
+    </div>
+{% endblock %}
+
